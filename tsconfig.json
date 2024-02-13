@@ -1,12 +1,15 @@
 {
 	"compilerOptions": {
 		"target": "ES2018",
-		"module": "commonjs",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
 		"jsx": "react-jsx",
 		"outDir": "./dist",
 		"strict": true,
 		"noEmit": true,
-		"lib": ["es2015"],
+		"lib": [
+			"ES2018"
+		],
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
