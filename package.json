@@ -25,9 +25,11 @@
 		"@remotion/cli": "4.0.110",
 		"@remotion/zod-types": "4.0.110",
 		"clsx": "^2.1.0",
+		"dedent": "^1.5.1",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0",
 		"remotion": "4.0.110",
+		"shikiji": "^0.10.2",
 		"zod": "^3.21.4"
 	},
 	"devDependencies": {

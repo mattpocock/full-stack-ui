@@ -1,5 +1,6 @@
-import { AbsoluteFill } from 'remotion';
+import { AbsoluteFill, interpolate, useCurrentFrame } from 'remotion';
 import clsx from 'clsx';
+import React from 'react';
 
 const COLS = 16;
 const ROWS = 9;
@@ -15,14 +16,14 @@ type GridY = number;
 export const getGridLayout = (props: {
 	x: GridX;
 	y: GridY;
-	width: number;
-	height: number;
+	width?: number;
+	height?: number;
 }) => {
 	return {
 		left: props.x * GRID_ITEM_WIDTH,
 		top: props.y * GRID_ITEM_WIDTH,
-		width: props.width * GRID_ITEM_WIDTH - 2,
-		height: props.height * GRID_ITEM_WIDTH - 2,
+		width: (props.width ?? 0) * GRID_ITEM_WIDTH - 1,
+		height: (props.height ?? 0) * GRID_ITEM_WIDTH - 1,
 	};
 };
 
@@ -30,10 +31,14 @@ export const GridItem = (props: {
 	children?: React.ReactNode;
 	x: GridX;
 	y: GridY;
-	width: number;
-	height: number;
+	width?: number;
+	height?: number;
 	className?: string;
 }) => {
+	const frame = useCurrentFrame();
+
+	const opacity = interpolate(frame, [0, 10], [0, 1]);
+
 	return (
 		<div
 			className={clsx(
@@ -42,6 +47,7 @@ export const GridItem = (props: {
 			)}
 			style={{
 				...getGridLayout(props),
+				opacity,
 			}}
 		>
 			{props.children}
@@ -51,7 +57,7 @@ export const GridItem = (props: {
 
 export const Grid = (props: { children?: React.ReactNode }) => {
 	return (
-		<AbsoluteFill className="bg-gray-900 flex items-center justify-center">
+		<AbsoluteFill className="bg-gray-900 flex items-center justify-center text-white">
 			<div
 				className="grid w-full"
 				style={{
@@ -67,7 +73,7 @@ export const Grid = (props: { children?: React.ReactNode }) => {
 						<div
 							key={i}
 							className={clsx(
-								'border-2 border-gray-800 aspect-square text-gray-700 flex items-center justify-center',
+								'border-2 border-gray-700 aspect-square text-gray-700 flex items-center justify-center pointer-events-none',
 								row !== 0 && 'border-t-0',
 								col !== 0 && 'border-l-0'
 							)}
@@ -75,14 +81,40 @@ export const Grid = (props: { children?: React.ReactNode }) => {
 								width: GRID_ITEM_WIDTH,
 							}}
 						>
-							<span className="text-4xl">
+							{/* <span className="text-4xl">
 								{col}/{row}
-							</span>
+							</span> */}
 						</div>
 					);
 				})}
 			</div>
 			{props.children}
 		</AbsoluteFill>
+	);
+};
+
+export const TwoColumnLayout = (props: {
+	left?: React.ReactNode;
+	right?: React.ReactNode;
+}) => {
+	return (
+		<Grid>
+			<GridItem x={1} y={1} width={7} height={7}>
+				{props.left}
+			</GridItem>
+			<GridItem x={8} y={1} width={7} height={7}>
+				{props.right}
+			</GridItem>
+		</Grid>
+	);
+};
+
+export const FullLayout = (props: { children?: React.ReactNode }) => {
+	return (
+		<Grid>
+			<GridItem x={1} y={1} width={14} height={7}>
+				{props.children}
+			</GridItem>
+		</Grid>
 	);
 };
