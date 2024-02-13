@@ -34,6 +34,7 @@ export const Code = (props: {
 	code: string;
 	className?: string;
 	filename?: string;
+	showHeader?: boolean;
 }) => {
 	const html = useAsyncResource(() =>
 		codeToHtml(dedent(props.code), {
@@ -46,19 +47,21 @@ export const Code = (props: {
 	if (!html) return null;
 
 	return (
-		<div className="flex-1 h-full w-full flex flex-col">
-			<div className="p-12 bg-gray-800 flex items-center space-x-10">
-				<div className="flex items-center space-x-5">
-					<div className="size-8 rounded-full bg-red-500"></div>
-					<div className="size-8 rounded-full bg-yellow-500"></div>
-					<div className="size-8 rounded-full bg-green-600"></div>
+		<div className="flex-1 h-full w-full flex flex-col relative">
+			{props.showHeader && (
+				<div className="bg-gray-800 flex items-center space-x-10 h-[120px] px-12">
+					<div className="flex items-center space-x-5">
+						<div className="size-8 rounded-full bg-red-500"></div>
+						<div className="size-8 rounded-full bg-yellow-500"></div>
+						<div className="size-8 rounded-full bg-green-600"></div>
+					</div>
+					{props.filename && (
+						<span className="text-3xl leading-2 text-gray-300 mt-[-6px]">
+							{props.filename}
+						</span>
+					)}
 				</div>
-				{props.filename && (
-					<span className="text-3xl leading-2 text-gray-300 mt-[-6px]">
-						{props.filename}
-					</span>
-				)}
-			</div>
+			)}
 			<div className="flex-1 flex items-center justify-start p-20 py-14 bg-[#1E1E1E] ">
 				<div
 					dangerouslySetInnerHTML={{
@@ -96,15 +99,17 @@ export const CodeComposition = () => {
 	// );
 
 	return (
-		<Sequence>
-			<Grid>
-				<GridItem x={1} y={2} width={6} height={5}>
+		<Grid>
+			<Sequence>
+				<GridItem x={1} y={3} width={8} height={4}>
 					<Code code={code} lang="tsx"></Code>
 				</GridItem>
-				<GridItem x={7} y={2} width={8} height={5}>
-					<Title>JSX can do awesome things</Title>
+			</Sequence>
+			<Sequence from={120}>
+				<GridItem x={1} y={2} width={8} height={1}>
+					<Title>JSX is composable</Title>
 				</GridItem>
-			</Grid>
-		</Sequence>
+			</Sequence>
+		</Grid>
 	);
 };

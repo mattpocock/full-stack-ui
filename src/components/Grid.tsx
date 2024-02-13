@@ -37,7 +37,7 @@ export const GridItem = (props: {
 }) => {
 	const frame = useCurrentFrame();
 
-	const opacity = interpolate(frame, [0, 10], [0, 1]);
+	const opacity = interpolate(frame, [0, 20], [0, 1]);
 
 	return (
 		<div
