@@ -1,4 +1,5 @@
-import { Sequence, Series } from 'remotion';
+import { Sequence } from 'remotion';
+import { CursorHighlightText } from './Cursor';
 import { Grid, GridItem } from './Grid';
 import { SingleMarkdownFile } from './MarkdownFile';
 import { Title } from './Title';
@@ -9,9 +10,11 @@ export const { slides, durationInFrames } = createSlideTimings({
 	intro: 240,
 	empty: 120,
 	arraySyntax: 120,
-	arraySyntax2: 240,
+	arraySyntaxCode: 120,
+	cursorHighlightArraySyntax: 200,
 	squareBracketSyntax: 120,
-	squareBracketSyntax2: 120,
+	squareBracketSyntaxCode: 120,
+	cursorHighlightSquareBracketSyntax: 200,
 });
 
 export const Playground = () => {
@@ -29,12 +32,20 @@ export const Playground = () => {
 					</GridItem>
 				</WipeIn>
 			</Sequence>
-			<Sequence from={slides.arraySyntax2.from}>
+			<Sequence from={slides.arraySyntaxCode.from}>
 				<WipeIn>
 					<GridItem x={7} y={1} width={8} height={3}>
 						<SingleMarkdownFile slug="arrays" index={0}></SingleMarkdownFile>
 					</GridItem>
 				</WipeIn>
+			</Sequence>
+			<Sequence from={slides.cursorHighlightArraySyntax.from}>
+				<CursorHighlightText
+					startX={12.5}
+					endX={13.5}
+					y={2.7}
+					durationInFrames={slides.cursorHighlightArraySyntax.duration}
+				/>
 			</Sequence>
 			<Sequence from={slides.squareBracketSyntax.from}>
 				<WipeIn>
@@ -43,12 +54,20 @@ export const Playground = () => {
 					</GridItem>
 				</WipeIn>
 			</Sequence>
-			<Sequence from={slides.squareBracketSyntax2.from}>
+			<Sequence from={slides.squareBracketSyntaxCode.from}>
 				<WipeIn>
 					<GridItem x={7} y={5} width={8} height={3}>
 						<SingleMarkdownFile slug="arrays" index={1}></SingleMarkdownFile>
 					</GridItem>
 				</WipeIn>
+			</Sequence>
+			<Sequence from={slides.cursorHighlightSquareBracketSyntax.from}>
+				<CursorHighlightText
+					startX={11.5}
+					endX={12.5}
+					y={6.7}
+					durationInFrames={slides.cursorHighlightSquareBracketSyntax.duration}
+				/>
 			</Sequence>
 		</Grid>
 	);

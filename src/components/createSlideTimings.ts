@@ -8,6 +8,7 @@ export const createSlideTimings = <T extends Record<string, number>>(
 			(acc as any)[key] = {
 				duration: value,
 				from: total,
+				to: total + value,
 			};
 
 			total += value;
@@ -19,6 +20,7 @@ export const createSlideTimings = <T extends Record<string, number>>(
 			{
 				duration: number;
 				from: number;
+				to: number;
 			}
 		>
 	);
