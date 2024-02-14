@@ -23,6 +23,7 @@
 	"dependencies": {
 		"@remotion/bundler": "4.0.110",
 		"@remotion/cli": "4.0.110",
+		"@remotion/transitions": "^4.0.110",
 		"@remotion/zod-types": "4.0.110",
 		"clsx": "^2.1.0",
 		"dedent": "^1.5.1",

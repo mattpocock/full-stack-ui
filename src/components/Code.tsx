@@ -1,31 +1,12 @@
+import { TransitionSeries, linearTiming } from '@remotion/transitions';
+import { fade } from '@remotion/transitions/fade';
 import clsx from 'clsx';
 import dedent from 'dedent';
-import { useCallback, useEffect, useState } from 'react';
-import { Sequence, cancelRender, continueRender, delayRender } from 'remotion';
+import { Sequence } from 'remotion';
 import { codeToHtml } from 'shikiji';
 import { Grid, GridItem } from './Grid';
 import { Title } from './Title';
-
-const useAsyncResource = <T,>(fetcher: () => Promise<T>) => {
-	const [data, setData] = useState<T | null>(null);
-	const [handle] = useState(() => delayRender());
-
-	const fetchData = useCallback(async () => {
-		try {
-			setData(await fetcher());
-
-			continueRender(handle);
-		} catch (err) {
-			cancelRender(err);
-		}
-	}, [handle]);
-
-	useEffect(() => {
-		fetchData();
-	}, [fetchData]);
-
-	return data;
-};
+import { useAsyncResource } from './useAsyncResource';
 
 const DEFAULT_LANG = 'ts';
 
@@ -37,7 +18,7 @@ export const Code = (props: {
 	showHeader?: boolean;
 }) => {
 	const html = useAsyncResource(() =>
-		codeToHtml(dedent(props.code), {
+		codeToHtml(props.code, {
 			lang: props.lang ?? DEFAULT_LANG,
 			theme: 'dark-plus',
 			mergeWhitespaces: true,
@@ -82,30 +63,34 @@ const code = `
 	</AwesomeStuff>
 `;
 
-export const CodeComposition = () => {
-	// return (
-	// 	<TwoColumnLayout
-	// 		left={
-	// 			<Sequence>
-	// 				<Code code={code} lang="ts" className="text-[34px]" />
-	// 			</Sequence>
-	// 		}
-	// 		right={
-	// 			<Sequence className="">
-	// 				<Code code={code} lang="ts" className="text-[34px]" />
-	// 			</Sequence>
-	// 		}
-	// 	></TwoColumnLayout>
-	// );
+const code2 = `
+	<AwesomeStuff>
+		<GreatStuff />
+		<GreatStuff />
+		<GreatStuff />
+	</AwesomeStuff>
+`;
 
+export const CodeComposition = () => {
 	return (
 		<Grid>
 			<Sequence>
 				<GridItem x={1} y={3} width={8} height={4}>
-					<Code code={code} lang="tsx"></Code>
+					<TransitionSeries>
+						<TransitionSeries.Sequence durationInFrames={120}>
+							<Code code={code} lang="tsx"></Code>
+						</TransitionSeries.Sequence>
+						<TransitionSeries.Transition
+							timing={linearTiming({ durationInFrames: 15 })}
+							presentation={fade({})}
+						/>
+						<TransitionSeries.Sequence durationInFrames={120}>
+							<Code code={code2} lang="tsx"></Code>
+						</TransitionSeries.Sequence>
+					</TransitionSeries>
 				</GridItem>
 			</Sequence>
-			<Sequence from={120}>
+			<Sequence from={60}>
 				<GridItem x={1} y={2} width={8} height={1}>
 					<Title>JSX is composable</Title>
 				</GridItem>

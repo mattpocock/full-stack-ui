@@ -11,6 +11,9 @@ dependencies:
   '@remotion/cli':
     specifier: 4.0.110
     version: 4.0.110(react-dom@18.2.0)(react@18.2.0)
+  '@remotion/transitions':
+    specifier: ^4.0.110
+    version: 4.0.110(react-dom@18.2.0)(react@18.2.0)
   '@remotion/zod-types':
     specifier: 4.0.110
     version: 4.0.110(react-dom@18.2.0)(react@18.2.0)(zod@3.22.4)
@@ -875,6 +878,10 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       remotion: 4.0.110(react-dom@18.2.0)(react@18.2.0)
 
+  /@remotion/paths@4.0.110:
+    resolution: {integrity: sha512-+rEnLEGXR2cy4VM6e0V6mzLl29IDErNlkhI5sGlQ8htPSvpD0kuLFrlNtMSs/XrvHdddOhmMVh4ON63B+7R+Lg==}
+    dev: false
+
   /@remotion/player@4.0.110(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-ByKMcNIuHm6v0YOd7pOFEVOT7eJ+BBXjqA8J/RTD04VEeg1F0QxnIC1btAQiwerfTb70xmiyi1PQpn+SdsQWiQ==}
     peerDependencies:
@@ -910,6 +917,17 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
+
+  /@remotion/shapes@4.0.110(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-pTLxVOsGtOXckpigfMA39MOIUnoLqFVWhN4+wXE0mcw+/1Sx5eHalFNi/iXQXTQLBOICQZp+JtUEcQj3FRW0yw==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@remotion/paths': 4.0.110
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /@remotion/studio-server@4.0.110(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-9h+DbgkjO/VfBNacZEJ2I7KF1MxFxen5eLvU1tbovE7XxKJiHK4hdS2CrwzdEavKneW5SXFDL1EkVhc7K1Aa1A==}
@@ -978,6 +996,19 @@ packages:
       - typescript
       - webpack
     dev: true
+
+  /@remotion/transitions@4.0.110(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-fnvA2CCPZVI8IsUztzy4mrhe9vmhHOFXfz7qQrfQu8Ew7IkEHws3KqTKj9YTxq3VqIc1R1OmlQfyG/g+Ino/WQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@remotion/paths': 4.0.110
+      '@remotion/shapes': 4.0.110(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      remotion: 4.0.110(react-dom@18.2.0)(react@18.2.0)
+    dev: false
 
   /@remotion/zod-types@4.0.110(react-dom@18.2.0)(react@18.2.0)(zod@3.22.4):
     resolution: {integrity: sha512-V05Az1MjoE+qNlMkQ/WMfsu59IlTc1lP0LRXqDXP+XgjH+ZnqNA5/AS+4TFt7neGfAusJHEh7+o1B5/NKjLufw==}

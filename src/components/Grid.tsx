@@ -1,6 +1,6 @@
-import { AbsoluteFill, interpolate, useCurrentFrame } from 'remotion';
 import clsx from 'clsx';
 import React from 'react';
+import { AbsoluteFill } from 'remotion';
 
 const COLS = 16;
 const ROWS = 9;
@@ -35,19 +35,14 @@ export const GridItem = (props: {
 	height?: number;
 	className?: string;
 }) => {
-	const frame = useCurrentFrame();
-
-	const opacity = interpolate(frame, [0, 20], [0, 1]);
-
 	return (
 		<div
 			className={clsx(
-				'flex items-center justify-center absolute',
+				'flex items-center justify-center absolute overflow-hidden',
 				props.className
 			)}
 			style={{
 				...getGridLayout(props),
-				opacity,
 			}}
 		>
 			{props.children}
