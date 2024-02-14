@@ -1,6 +1,7 @@
 import { Series, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import { GridItem } from './Grid';
 import { createSlideTimings } from './createSlideTimings';
+import { Whoosh } from './Whoosh';
 
 export const CursorHighlightText = (props: {
 	startX: number;
@@ -36,6 +37,7 @@ export const CursorHighlightText = (props: {
 	return (
 		<Series>
 			<Series.Sequence durationInFrames={slides.flyIn.duration}>
+				<Whoosh />
 				<Move
 					durationInFrames={slides.flyIn.duration}
 					startX={16}

@@ -3,4 +3,6 @@
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"css.lint.unknownAtRules": "ignore",
+	"files.autoSave": "afterDelay",
+	"files.autoSaveDelay": 200
 }

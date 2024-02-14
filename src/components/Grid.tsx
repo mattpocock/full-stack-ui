@@ -68,7 +68,45 @@ export const Grid = (props: { children?: React.ReactNode }) => {
 						<div
 							key={i}
 							className={clsx(
-								'border-2 border-gray-700 aspect-square text-gray-700 flex items-center justify-center pointer-events-none',
+								'border-2 border-gray-800 aspect-square text-gray-700 flex items-center justify-center pointer-events-none',
+								row !== 0 && 'border-t-0',
+								col !== 0 && 'border-l-0'
+							)}
+							style={{
+								width: GRID_ITEM_WIDTH,
+							}}
+						>
+							{/* <span className="text-4xl">
+								{col}/{row}
+							</span> */}
+						</div>
+					);
+				})}
+			</div>
+			{props.children}
+		</AbsoluteFill>
+	);
+};
+
+export const VerticalGrid = (props: { children?: React.ReactNode }) => {
+	return (
+		<AbsoluteFill className="bg-gray-900 flex items-center justify-center text-white">
+			<div
+				className="grid w-full"
+				style={{
+					gridTemplateColumns: `repeat(${ROWS}, 1fr)`,
+					gridTemplateRows: `repeat(${COLS}, 1fr)`,
+				}}
+			>
+				{new Array(COLS * ROWS).fill(0).map((_, i) => {
+					const row = Math.floor(i / COLS);
+					const col = i % COLS;
+
+					return (
+						<div
+							key={i}
+							className={clsx(
+								'border-2 border-gray-800 aspect-square text-gray-700 flex items-center justify-center pointer-events-none',
 								row !== 0 && 'border-t-0',
 								col !== 0 && 'border-l-0'
 							)}

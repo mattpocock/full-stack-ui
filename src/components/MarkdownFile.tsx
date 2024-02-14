@@ -33,6 +33,7 @@ export const MarkdownCodeSequence = (props: {
 	slug: string;
 	durations: number[];
 	showHeader?: boolean;
+	className?: string;
 }) => {
 	const codeBlocks = useMarkdownCodeBlocks(props.slug);
 
@@ -68,6 +69,7 @@ export const MarkdownCodeSequence = (props: {
 							key={`code-${index}`}
 							code={codeBlock.code}
 							lang={codeBlock.lang}
+							className={props.className}
 						></Code>
 					</TransitionSeries.Sequence>,
 					...(index === codeBlocks.length - 1
@@ -92,6 +94,7 @@ export const SingleMarkdownFile = (props: {
 	slug: string;
 	index: number;
 	showHeader?: boolean;
+	className?: string;
 }) => {
 	const codeBlocks = useMarkdownCodeBlocks(props.slug);
 
@@ -99,6 +102,7 @@ export const SingleMarkdownFile = (props: {
 
 	return (
 		<Code
+			className={props.className}
 			code={codeBlocks[props.index].code}
 			lang={codeBlocks[props.index].lang}
 			showHeader={props.showHeader}
