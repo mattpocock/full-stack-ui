@@ -1,14 +1,29 @@
+import { createPortal } from 'react-dom';
 import { Series, spring, useCurrentFrame, useVideoConfig } from 'remotion';
-import { GridItem } from './Grid';
-import { createSlideTimings } from './createSlideTimings';
 import { Whoosh } from './Whoosh';
+import { createSlideTimings } from './createSlideTimings';
+import { useInverseScale, useScale } from './useScale';
+
+export const getCodeNodeContainingText = (text: string) => {
+	return Array.from(document.querySelectorAll('span')).find(
+		(node) => node.innerText.includes(text) && !node.classList.contains('line')
+	);
+};
+
+export const getCodeNodesContainingText = (text: string) => {
+	return Array.from(document.querySelectorAll('span')).filter(
+		(node) => node.innerText.includes(text) && !node.classList.contains('line')
+	);
+};
 
 export const CursorHighlightText = (props: {
-	startX: number;
-	endX: number;
-	y: number;
+	getElement: () => HTMLElement | null | undefined;
 	durationInFrames: number;
+	hideAudio?: boolean;
+	adjustStartX?: number;
 }) => {
+	const scale = useScale();
+
 	if (props.durationInFrames < 100) {
 		throw new Error(`props.durationInFrames must be greater than 100`);
 	}
@@ -34,53 +49,71 @@ export const CursorHighlightText = (props: {
 	// 	},
 	// });
 
-	return (
-		<Series>
-			<Series.Sequence durationInFrames={slides.flyIn.duration}>
-				<Whoosh />
-				<Move
-					durationInFrames={slides.flyIn.duration}
-					startX={16}
-					endX={props.startX}
-					endY={props.y}
-					startY={9}
-				>
-					<Cursor />
-				</Move>
-			</Series.Sequence>
-			<Series.Sequence durationInFrames={slides.pause.duration}>
-				<GridItem x={props.startX} y={props.y}>
-					<Cursor />
-				</GridItem>
-			</Series.Sequence>
-			<Series.Sequence durationInFrames={slides.slide.duration}>
-				<Move
-					durationInFrames={slides.slide.duration}
-					startX={props.startX}
-					endX={props.endX}
-					endY={props.y}
-					startY={props.y}
-				>
-					<Cursor />
-				</Move>
-			</Series.Sequence>
-			<Series.Sequence durationInFrames={slides.pause2.duration}>
-				<GridItem x={props.endX} y={props.y}>
-					<Cursor />
-				</GridItem>
-			</Series.Sequence>
-			<Series.Sequence durationInFrames={slides.flyOut.duration}>
-				<Move
-					durationInFrames={slides.flyOut.duration}
-					startX={props.endX}
-					endX={16}
-					endY={9}
-					startY={props.y}
-				>
-					<Cursor />
-				</Move>
-			</Series.Sequence>
-		</Series>
+	const element = props.getElement();
+
+	if (!element) {
+		return null;
+	}
+
+	const rect = element.getBoundingClientRect();
+
+	element.classList.add('relative');
+
+	const startX = props.adjustStartX || 0;
+
+	const y = (rect.height + 2) * scale;
+	const endX = rect.width * scale;
+
+	return createPortal(
+		<>
+			<Series>
+				<Series.Sequence durationInFrames={slides.flyIn.duration}>
+					<Whoosh />
+					<Move
+						durationInFrames={slides.flyIn.duration}
+						startX={1920}
+						endX={startX}
+						endY={y}
+						startY={1080}
+					>
+						<Cursor />
+					</Move>
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={slides.pause.duration}>
+					<AbsolutePositioned x={startX} y={y}>
+						<Cursor />
+					</AbsolutePositioned>
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={slides.slide.duration}>
+					<Move
+						durationInFrames={slides.slide.duration}
+						startX={startX}
+						endX={endX}
+						endY={y}
+						startY={y}
+					>
+						<Cursor />
+					</Move>
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={slides.pause2.duration}>
+					<AbsolutePositioned x={endX} y={y}>
+						<Cursor />
+					</AbsolutePositioned>
+				</Series.Sequence>
+				<Series.Sequence durationInFrames={slides.flyOut.duration}>
+					<Move
+						durationInFrames={slides.flyOut.duration}
+						startX={endX}
+						endX={1920}
+						endY={1080}
+						startY={y}
+					>
+						<Cursor />
+					</Move>
+				</Series.Sequence>
+			</Series>
+		</>,
+		element
 	);
 };
 
@@ -121,9 +154,26 @@ const Move = (props: {
 	});
 
 	return (
-		<GridItem x={x} y={y}>
+		<AbsolutePositioned x={x} y={y}>
 			{props.children}
-		</GridItem>
+		</AbsolutePositioned>
+	);
+};
+
+const AbsolutePositioned = (props: {
+	x: number;
+	y: number;
+	children: React.ReactNode;
+}) => {
+	return (
+		<div
+			className="absolute inline-block"
+			style={{
+				transform: `translate(${props.x}px, ${props.y}px)`,
+			}}
+		>
+			{props.children}
+		</div>
 	);
 };
 

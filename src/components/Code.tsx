@@ -30,7 +30,7 @@ export const Code = (props: {
 	return (
 		<div className="flex-1 h-full w-full flex flex-col relative">
 			{props.showHeader && (
-				<div className="bg-gray-800 flex items-center space-x-10 h-[120px] px-12">
+				<div className="bg-gray-800 flex items-center space-x-10 h-[120px]">
 					<div className="flex items-center space-x-5">
 						<div className="size-8 rounded-full bg-red-500"></div>
 						<div className="size-8 rounded-full bg-yellow-500"></div>
@@ -43,12 +43,12 @@ export const Code = (props: {
 					)}
 				</div>
 			)}
-			<div className="flex-1 flex items-center justify-start p-20 py-14 bg-[#1E1E1E] ">
+			<div className="flex-1 flex items-center justify-start bg-[#1E1E1E] ">
 				<div
 					dangerouslySetInnerHTML={{
 						__html: html,
 					}}
-					className={clsx('text-[34px]', props.className)}
+					className={clsx('text-[34px]', 'p-20 py-14', props.className)}
 				></div>
 			</div>
 		</div>

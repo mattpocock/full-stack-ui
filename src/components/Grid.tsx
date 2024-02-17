@@ -38,7 +38,7 @@ export const GridItem = (props: {
 	return (
 		<div
 			className={clsx(
-				'flex items-center justify-center absolute overflow-hidden',
+				'flex items-center justify-center absolute',
 				props.className
 			)}
 			style={{

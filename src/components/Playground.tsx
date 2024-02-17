@@ -1,11 +1,11 @@
-import { Sequence, Series } from 'remotion';
+import { Sequence } from 'remotion';
 import { Chillhop } from './BgMusic';
+import { CursorHighlightText, getCodeNodeContainingText } from './Cursor';
 import { Grid, GridItem } from './Grid';
 import { MarkdownCodeSequence } from './MarkdownFile';
 import { Title } from './Title';
 import { WipeIn, WipeInAndOut } from './Transitions';
 import { createSlideTimings } from './createSlideTimings';
-import { CursorHighlightText } from './Cursor';
 
 // export const { slides, durationInFrames } = createSlideTimings({
 // 	intro: 240,
@@ -114,18 +114,14 @@ export const Playground = () => {
 			</Sequence>
 			<Sequence from={slides.omitCursor.from}>
 				<CursorHighlightText
-					startX={1.7}
-					endX={5.8}
+					getElement={() => getCodeNodeContainingText('works on')}
 					durationInFrames={slides.omitCursor.duration}
-					y={3.2}
 				></CursorHighlightText>
 			</Sequence>
 			<Sequence from={slides.excludeCursor.from}>
 				<CursorHighlightText
-					startX={1.7}
-					endX={6.1}
+					getElement={() => getCodeNodeContainingText('works on')}
 					durationInFrames={slides.excludeCursor.duration}
-					y={4.1}
 				></CursorHighlightText>
 			</Sequence>
 		</Grid>

@@ -1,13 +1,13 @@
 import { TransitionSeries, linearTiming } from '@remotion/transitions';
 import { wipe } from '@remotion/transitions/wipe';
-import { Easing } from 'remotion';
+import { Easing, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 
 export const WipeIn = (props: { children?: React.ReactNode }) => {
 	return (
 		<TransitionSeries>
 			<TransitionSeries.Transition
 				timing={linearTiming({
-					durationInFrames: 50,
+					durationInFrames: 40,
 					easing: Easing.inOut(Easing.ease),
 				})}
 				presentation={wipe({ direction: 'from-left' })}
@@ -27,17 +27,17 @@ export const WipeInAndOut = (props: {
 		<TransitionSeries>
 			<TransitionSeries.Transition
 				timing={linearTiming({
-					durationInFrames: 50,
+					durationInFrames: 40,
 					easing: Easing.inOut(Easing.ease),
 				})}
 				presentation={wipe({ direction: 'from-left' })}
 			/>
-			<TransitionSeries.Sequence durationInFrames={props.durationInFrames}>
+			<TransitionSeries.Sequence durationInFrames={props.durationInFrames + 20}>
 				{props.children}
 			</TransitionSeries.Sequence>
 			<TransitionSeries.Transition
 				timing={linearTiming({
-					durationInFrames: 50,
+					durationInFrames: 40,
 					easing: Easing.inOut(Easing.ease),
 				})}
 				presentation={wipe({ direction: 'from-left' })}

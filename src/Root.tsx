@@ -4,6 +4,9 @@ import './style.css';
 import { CodeComposition } from './components/Code';
 import * as Playground from './components/Playground';
 import * as VerticalPlayground from './components/VerticalPlayground';
+import * as Omit from './videos/Omit';
+import * as Partial from './videos/Partial';
+import * as ReadonlyProperties from './videos/ReadonlyProperties';
 
 export const RemotionRoot: React.FC = () => {
 	return (
@@ -39,6 +42,30 @@ export const RemotionRoot: React.FC = () => {
 				width={1080}
 				height={1920}
 				durationInFrames={VerticalPlayground.durationInFrames}
+			/>
+			<Composition
+				component={Omit.Omit}
+				id="Omit"
+				fps={60}
+				width={1080}
+				height={1920}
+				durationInFrames={Omit.durationInFrames}
+			/>
+			<Composition
+				component={Partial.Partial}
+				id="Partial"
+				fps={60}
+				width={1080}
+				height={1920}
+				durationInFrames={Partial.durationInFrames}
+			/>
+			<Composition
+				component={ReadonlyProperties.ReadonlyProperties}
+				id="ReadonlyProperties"
+				fps={60}
+				width={1080}
+				height={1920}
+				durationInFrames={ReadonlyProperties.durationInFrames}
 			/>
 		</>
 	);
